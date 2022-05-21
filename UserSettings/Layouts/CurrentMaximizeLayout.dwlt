@@ -25,7 +25,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 2929
+  controlID: 93
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -54,8 +54,10 @@ MonoBehaviour:
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
-  m_SerializedViewNames: []
-  m_SerializedViewValues: []
+  m_SerializedViewNames:
+  - UnityEditor.DeviceSimulation.SimulatorWindow
+  m_SerializedViewValues:
+  - C:\Users\vantan\Documents\Unity\GameMania\Library\PlayModeViewStates\21379e3ae002dab46bc98cce7af378e5
   m_PlayModeViewName: GameView
   m_ShowGizmos: 0
   m_TargetDisplay: 0
@@ -64,9 +66,9 @@ MonoBehaviour:
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
-  m_EnterPlayModeBehavior: 1
+  m_EnterPlayModeBehavior: 2
   m_fullscreenMonitorIdx: 0
-  m_playModeBehaviorIdx: 1
+  m_playModeBehaviorIdx: 0
   m_UseMipMap: 0
   m_isFullscreen: 0
   m_suppressRenderingForFullscreen: 0
@@ -92,7 +94,7 @@ MonoBehaviour:
     m_HSlider: 0
     m_VSlider: 0
     m_IgnoreScrollWheelUntilClicked: 0
-    m_EnableMouseInput: 1
+    m_EnableMouseInput: 0
     m_EnableSliderZoomHorizontal: 0
     m_EnableSliderZoomVertical: 0
     m_UniformScale: 1
@@ -144,8 +146,8 @@ MonoBehaviour:
     y: 0
     width: 708
     height: 957
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 4}
   m_Panes:
   - {fileID: 4}
@@ -412,9 +414,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.019275665, y: -28.196125, z: 1.638727}
+    m_Target: {x: 0.29382575, y: -36.85843, z: 10.830901}
     speed: 2
-    m_Value: {x: -0.019275665, y: -28.196125, z: 1.638727}
+    m_Value: {x: 0.29382575, y: -36.85843, z: 10.830901}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -460,13 +462,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.6746443, y: -0.052544393, z: 0.048257407, w: -0.73470443}
+    m_Target: {x: -0.6078497, y: -0.03996796, z: 0.030674277, w: -0.792476}
     speed: 2
-    m_Value: {x: -0.67463577, y: -0.05254373, z: 0.048256796, w: -0.73469514}
+    m_Value: {x: -0.6078383, y: -0.03996721, z: 0.0306737, w: -0.7924611}
   m_Size:
-    m_Target: 19.831678
+    m_Target: 43.151985
     speed: 2
-    m_Value: 19.831678
+    m_Value: 43.151985
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -605,7 +607,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 73
-    width: 616
+    width: 707
     height: 936
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -635,7 +637,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 2907
+  controlID: 51
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -655,8 +657,8 @@ MonoBehaviour:
     y: 0
     width: 677
     height: 495
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -695,25 +697,25 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 34fbffff
+      m_SelectedIDs: b8700000
+      m_LastClickedID: 28856
+      m_ExpandedIDs: ce93feff2249ffff0eefffff90efffff92f9ffff18fbffff285e0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: BaseGround
+        m_OriginalName: BaseGround
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 24104
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
-        m_ClientGUIView: {fileID: 13}
+        m_ClientGUIView: {fileID: 9}
       m_SearchString: 
     m_ExpandedScenes: []
     m_CurrenRootInstanceID: 0
@@ -751,7 +753,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 23266
+  m_LastSelectedObjectID: 28856
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -781,7 +783,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_PosLeft: {x: 0, y: 0}
-  m_PosRight: {x: 0, y: 0}
+  m_PosRight: {x: 0, y: 60}
   m_Scope: 1
   m_SplitterFlex: 0.2
   m_SearchText: 
@@ -826,8 +828,8 @@ MonoBehaviour:
     y: 495
     width: 677
     height: 462
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 14}
@@ -875,22 +877,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/MyAssets/Prefabs/Resorce
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/MyAssets/Prefabs/Resorce
+  - Assets/Scenes
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\vantan\Documents\Unity\GameMania
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: be690000
-    m_LastClickedID: 27070
-    m_ExpandedIDs: 000000008a5b00008c5b0000ba69000000ca9a3b
+    m_SelectedIDs: b45c0000
+    m_LastClickedID: 23732
+    m_ExpandedIDs: 000000006c5c0000b25c0000c65c0000c85c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -918,7 +920,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008c5b000000ca9a3b
+    m_ExpandedIDs: 000000006c5c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -943,9 +945,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 18a8feff
-    m_LastClickedInstanceID: -88040
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300005eb70000c0370000663c00005c3c0000923900007a4e00001a39000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
