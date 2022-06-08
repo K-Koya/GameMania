@@ -156,8 +156,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b00f62f3842031428ee493d7f82ed1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Row: 5
-  _Column: 5
+  _Row: 3
+  _Column: 3
+  _SelectedC: 0
+  _SelectedR: 0
+  _IsCleared: 0
+  _NumberOfEffort: 0
 --- !u!114 &456393089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +267,7 @@ MonoBehaviour:
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 3
 --- !u!1 &1211108163
 GameObject:
   m_ObjectHideFlags: 0
