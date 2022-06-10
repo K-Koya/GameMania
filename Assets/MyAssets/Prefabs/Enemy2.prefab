@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4167712031736131950}
   - component: {fileID: 4167712031736131949}
   - component: {fileID: 8316888044896120471}
+  - component: {fileID: 915341451412847931}
   m_Layer: 9
   m_Name: Enemy2
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4167712031736131944
 MeshFilter:
@@ -146,3 +147,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _PowerOnStay: 0.1
   _PowerOnEnter: 0
+--- !u!114 &915341451412847931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4167712031736131947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fafd830740a54f4ba18a091244a3a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Life: 20
+  _GiveExp: 2
+  _LayerNamePlayer: Player
+  _TagNamePlayerAttack: PlayerAttack

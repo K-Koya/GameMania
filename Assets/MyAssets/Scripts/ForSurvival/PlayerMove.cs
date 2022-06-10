@@ -34,6 +34,8 @@ namespace Survival
         // Update is called once per frame
         void Update()
         {
+            if (PauseManager.IsTimerStopped) return;
+
             _ForceOfMove = Vector3.forward * Input.GetAxis(_InputNameMoveVertical) + Vector3.right * Input.GetAxis(_InputNameMoveHorizontal);
             _ForceOfMove = _ForceOfMove.normalized * _MoveSpeed;
         }

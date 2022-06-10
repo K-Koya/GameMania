@@ -37,6 +37,9 @@ namespace Survival
         /// <summary>敵を出現させる場所</summary>
         Transform[] EnemySpawners = default;
 
+        /// <summary>経過時間(s)</summary>
+        public double Timer { get => _Timer; }
+
 
         // Start is called before the first frame update
         void Start()
@@ -50,6 +53,8 @@ namespace Survival
         // Update is called once per frame
         void Update()
         {
+            if (PauseManager.IsTimerStopped) return;
+
             //タイマー加算&ウェーブカウント処理
             _Timer += Time.deltaTime;
             if(_Timer > _WaveBorder)

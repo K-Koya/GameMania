@@ -14,9 +14,13 @@ namespace Homework
         [SerializeField] int _SelectedR = 0;
 
         Image[,] _Cells = default;
-        
+
+        [Header("true : クリアした")]
         [SerializeField] bool _IsCleared = false;
-        [SerializeField] int _NumberOfEffort = 0; 
+        [Header("掛かった手数")]
+        [SerializeField] int _NumberOfEffort = 0;
+        [Header("掛かった時間")]
+        [SerializeField] float _Timer = 0f;
 
         private void Start()
         {
@@ -56,44 +60,7 @@ namespace Homework
 
         private void Update()
         {
-            /*
-            int vertical = (Input.GetKeyDown(KeyCode.UpArrow) ? -1 : 0) + (Input.GetKeyDown(KeyCode.DownArrow) ? 1 : 0);
-            int horizontal = (Input.GetKeyDown(KeyCode.LeftArrow) ? -1 : 0) + (Input.GetKeyDown(KeyCode.RightArrow) ? 1 : 0);
-
-            if (vertical != 0)
-            {
-                _SelectedR = Repeat(_SelectedR + vertical, _Row);
-                DrawCell();
-            }
-            if (horizontal != 0)
-            {
-                _SelectedC = Repeat(_SelectedC + horizontal, _Column);
-                DrawCell();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space)) //spaceキーを押した
-            {
-                Destroy(_Cells[_SelectedR, _SelectedC]);
-                _Cells[_SelectedR, _SelectedC] = null;
-
-                //存在する別のマスへカーソルを移す
-                for (var r = 0; r < _Row; r++)
-                {
-                    for (var c = 0; c < _Column; c++)
-                    {
-                        if (_Cells[r, c])
-                        {
-                            _SelectedR = r;
-                            _SelectedC = c;
-                            goto LoopBreak;
-                        }
-                    }
-                }
-            LoopBreak:;
-
-                DrawCell();
-            }
-            */
+            if (!_IsCleared) _Timer += Time.deltaTime;
         }
 
         void DrawCell()
@@ -139,7 +106,11 @@ namespace Homework
             }
         LoopBreak:;
 
-            if (_IsCleared) _NumberOfEffort = 0;
+            if (_IsCleared)
+            {
+                _NumberOfEffort = 0;
+                _Timer = 0f;
+            }
 
             _IsCleared = true;
             foreach (var c in _Cells)

@@ -64,7 +64,9 @@ namespace Survival
         // Update is called once per frame
         void Update()
         {
-            if(Move != null) Move();
+            if (PauseManager.IsTimerStopped) return;
+
+            if (Move != null) Move();
             gameObject.SetActive(Vector3.SqrMagnitude(_PlayerTransform.position - transform.position) < _ActiveDistance * _ActiveDistance);
         }
 

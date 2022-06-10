@@ -132,11 +132,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456393092}
+  - component: {fileID: 456393087}
   - component: {fileID: 456393091}
   - component: {fileID: 456393090}
   - component: {fileID: 456393089}
   - component: {fileID: 456393093}
-  - component: {fileID: 456393087}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -162,6 +162,7 @@ MonoBehaviour:
   _SelectedR: 0
   _IsCleared: 0
   _NumberOfEffort: 0
+  _Timer: 0
 --- !u!114 &456393089
 MonoBehaviour:
   m_ObjectHideFlags: 0
