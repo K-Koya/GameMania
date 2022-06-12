@@ -7,8 +7,10 @@ namespace Survival
 {
     public class WaveEnemyManager : MonoBehaviour
     {
+        #region メンバ
         /// <summary>タグ名 : スポナー</summary>
         const string _TAG_NAME_SPAWNER = "Spawner";
+
 
         [SerializeField, Tooltip("経過時間を記憶(s)")]
         double _Timer = 0f;
@@ -29,17 +31,29 @@ namespace Survival
         SummonEnemyOnWave[] _EnemyDataForWaves = default;
 
         /// <summary>出現している敵をまとめて管理するインスタンス</summary>
-        ObjectPool<GameObject>[] Enemies = default;
+        ObjectPool<GameObject>[] _Enemies = default;
 
         /// <summary>出現するウェーブを終えた敵をまとめて管理するインスタンス</summary>
-        ObjectPool<GameObject>[] EndWaveEnemies = default;
+        ObjectPool<GameObject>[] _EndWaveEnemies = default;
 
         /// <summary>敵を出現させる場所</summary>
         Transform[] EnemySpawners = default;
 
+        /// <summary>倒した敵の数</summary>
+        static int _DefeatedEnemyCount = 0;
+        #endregion
+
+
+        #region プロパティ
         /// <summary>経過時間(s)</summary>
         public double Timer { get => _Timer; }
-
+        /// <summary>今のウェーブで出現する敵</summary>
+        public ObjectPool<GameObject>[] Enemies { get => _Enemies; }
+        /// <summary>出現するウェーブを終えた敵</summary>
+        public ObjectPool<GameObject>[] EndWaveEnemies { get => _EndWaveEnemies; }
+        /// <summary>倒した敵の数</summary>
+        public static int DefeatedEnemyCount { get => _DefeatedEnemyCount; set => _DefeatedEnemyCount = value; }
+        #endregion
 
         // Start is called before the first frame update
         void Start()
@@ -48,6 +62,8 @@ namespace Survival
 
             _WaveBorder = 0f;
             _WaveCount = -1;
+
+            _DefeatedEnemyCount = 0;
         }
 
         // Update is called once per frame
@@ -64,18 +80,18 @@ namespace Survival
                 //次のウェーブ設定があれば出現する敵情報を変更
                 if (_WaveCount < _EnemyDataForWaves.Length - 1)
                 {
-                    EndWaveEnemies = Enemies;
-                    Enemies = new ObjectPool<GameObject>[_EnemyPrefs.Length];
+                    _EndWaveEnemies = _Enemies;
+                    _Enemies = new ObjectPool<GameObject>[_EnemyPrefs.Length];
 
                     _WaveCount += 1;
                     for (int i = 0; i < _EnemyDataForWaves.Length; i++)
                     {
                         uint id = _EnemyDataForWaves[_WaveCount].SummonEnemies[i].EnemyId;
-                        Enemies[id] = new ObjectPool<GameObject>(_EnemyDataForWaves[_WaveCount].SummonEnemies[i].Count);
+                        _Enemies[id] = new ObjectPool<GameObject>(_EnemyDataForWaves[_WaveCount].SummonEnemies[i].Count);
 
                         for (int k = 0; k < _EnemyDataForWaves[_WaveCount].SummonEnemies[i].Count; k++)
                         {
-                            GameObject obj = Enemies[id].Create(Instantiate(_EnemyPrefs[id]));
+                            GameObject obj = _Enemies[id].Create(Instantiate(_EnemyPrefs[id]));
                             obj.SetActive(false);
                         }
                     }
@@ -83,27 +99,27 @@ namespace Survival
             }
 
             //削除処理対象の敵がいなければ抜ける
-            if (EndWaveEnemies == null) return;
+            if (_EndWaveEnemies == null) return;
 
             //ウェーブ対象外の敵を順次削除
-            for(int i = 0; i < EndWaveEnemies.Length; i++)
+            for(int i = 0; i < _EndWaveEnemies.Length; i++)
             {
-                if (EndWaveEnemies[i] == null) continue;
+                if (_EndWaveEnemies[i] == null) continue;
 
                 bool haveActive = false;
-                for(int k = 0; k < EndWaveEnemies[i].Values.Length; k++)
+                for(int k = 0; k < _EndWaveEnemies[i].Values.Length; k++)
                 {
-                    if (EndWaveEnemies[i].Values[k])
+                    if (_EndWaveEnemies[i].Values[k])
                     {
                         haveActive = true;
-                        if (!EndWaveEnemies[i].Values[k].activeSelf)
+                        if (!_EndWaveEnemies[i].Values[k].activeSelf)
                         {
-                            Destroy(EndWaveEnemies[i].Values[k]);
+                            Destroy(_EndWaveEnemies[i].Values[k]);
                         }
                     }
                 }
 
-                if (!haveActive) EndWaveEnemies[i] = null;
+                if (!haveActive) _EndWaveEnemies[i] = null;
             }
         }
 
@@ -111,12 +127,12 @@ namespace Survival
         {
             //敵を生成
             uint[] ids = _EnemyDataForWaves[_WaveCount].SummonEnemies.Select(ed => ed.EnemyId).ToArray();
-            for (uint i = 0; i < Enemies.Length; i++)
+            for (uint i = 0; i < _Enemies.Length; i++)
             {
                 //ウェーブに含まれている敵
                 if (ids.Contains(i))
                 {
-                    foreach (GameObject enemy in Enemies[i].Values)
+                    foreach (GameObject enemy in _Enemies[i].Values)
                     {
                         if (!enemy.activeSelf)
                         {
@@ -127,6 +143,12 @@ namespace Survival
                     }
                 }
             }
+        }
+
+        void OnDestroy()
+        {
+            _Enemies = null;
+            _EndWaveEnemies = null;
         }
     }
 

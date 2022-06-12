@@ -8,6 +8,9 @@ public class PauseManager : MonoBehaviour
     /// <summary>true : 時間停止中</summary>
     static bool _IsTimerStopped = false;
 
+    /// <summary>ポーズ等を考慮しない現在のTimeScale</summary>
+    static float _NowTimeScale = 1f; 
+
     [SerializeField, Tooltip("true : ポーズ中")]
     bool _IsPaused = false;
 
@@ -19,13 +22,17 @@ public class PauseManager : MonoBehaviour
 
 
     /// <summary>true : 時間停止中</summary>
-    public static bool IsTimerStopped { get => _IsTimerStopped; }
+    public static bool IsTimerStopped { get => _IsTimerStopped; set => _IsTimerStopped = value; }
+    /// <summary>ポーズ等を考慮しない現在のTimeScale</summary>
+    public static float NowTimeScale { get => _NowTimeScale; set => _NowTimeScale = value; }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _IsTimerStopped = false;
+        _NowTimeScale = 1f;
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame
@@ -38,7 +45,7 @@ public class PauseManager : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1f;
+            Time.timeScale = _NowTimeScale;
         }
 
         //外部からの時間停止要請は受け付ける

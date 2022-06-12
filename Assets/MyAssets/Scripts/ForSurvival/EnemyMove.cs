@@ -13,9 +13,6 @@ namespace Survival
         [SerializeField, Tooltip("キャラクターの移動力")]
         float _MoveSpeed = 10f;
 
-        [SerializeField, Tooltip("プレイヤーからこの距離分離れると非アクティブ化する")]
-        float _ActiveDistance = 28f;
-
         [SerializeField, Tooltip("移動でリジッドボディにかける力")]
         Vector3 _ForceOfMove = default;
 
@@ -25,20 +22,17 @@ namespace Survival
         /// <summary>移動用メソッド</summary>
         Action Move = default;
 
-        /// <summary>プレイヤー位置</summary>
-        static Transform _PlayerTransform = default;
         
 
         // Start is called before the first frame update
         void Start()
         {
             _Rb = GetComponent<Rigidbody>();
-            if(!_PlayerTransform) _PlayerTransform = FindObjectOfType<PlayerMove>().transform;
 
             switch (_MovePattern)
             {
                 case MovePattern.GoStraight:
-                    _ForceOfMove = (_PlayerTransform.position - transform.position).normalized * _MoveSpeed;
+                    _ForceOfMove = (PlayerStatus.Transform.position - transform.position).normalized * _MoveSpeed;
                     break;
                 case MovePattern.Approach:
                     Move = MoveApproach;
@@ -52,7 +46,7 @@ namespace Survival
             switch (_MovePattern)
             {
                 case MovePattern.GoStraight:
-                    _ForceOfMove = (_PlayerTransform.position - transform.position).normalized * _MoveSpeed;
+                    _ForceOfMove = (PlayerStatus.Transform.position - transform.position).normalized * _MoveSpeed;
                     break;
                 case MovePattern.Approach:
                     Move = MoveApproach;
@@ -67,7 +61,7 @@ namespace Survival
             if (PauseManager.IsTimerStopped) return;
 
             if (Move != null) Move();
-            gameObject.SetActive(Vector3.SqrMagnitude(_PlayerTransform.position - transform.position) < _ActiveDistance * _ActiveDistance);
+            gameObject.SetActive(Vector3.SqrMagnitude(PlayerStatus.Transform.position - transform.position) < Mathf.Pow(PlayerStatus.FAR_POINT, 2));
         }
 
         void FixedUpdate()
@@ -79,7 +73,7 @@ namespace Survival
         /// <summary>プレイヤーに近づくように移動</summary>
         void MoveApproach()
         {
-            _ForceOfMove = (_PlayerTransform.position - transform.position).normalized * _MoveSpeed;
+            _ForceOfMove = (PlayerStatus.Transform.position - transform.position).normalized * _MoveSpeed;
         }
 
         /// <summary>敵の移動手段</summary>

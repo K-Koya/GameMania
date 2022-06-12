@@ -60,7 +60,9 @@ namespace Survival
 
             int minite = (int)Timer / 60;
             int second = (int)Timer - (minite * 60);
-            _ForPassageTimer.text = $"{minite.ToString("000")}:{second.ToString("00")}";
+            _ForPassageTimer.text = minite.ToString().PadLeft(3) + ":" + second.ToString().PadLeft(2, '0');
+
+            _ForDefeatedEnemy.text = WaveEnemyManager.DefeatedEnemyCount.ToString();
         }
     }
 }
