@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class LayerManager : MonoBehaviour
 {
+    [SerializeField] string _LayerNameDefault = "Default";
     [SerializeField] string _LayerNameGround = "Ground";
     [SerializeField] string _LayerNamePlayer = "Player";
     [SerializeField] string _LayerNamePlayerAttack = "PlayerAttack";
     [SerializeField] string _LayerNameEnemy = "Enemy";
 
+    public static int Default = -1;
     public static int Ground = -1;
     public static int Player = -1;
     public static int PlayerAttack = -1;
@@ -16,6 +18,7 @@ public class LayerManager : MonoBehaviour
 
     void Awake()
     {
+        Default = LayerMask.NameToLayer(_LayerNameDefault);
         Ground = LayerMask.NameToLayer(_LayerNameGround);
         Player = LayerMask.NameToLayer(_LayerNamePlayer);
         PlayerAttack = LayerMask.NameToLayer(_LayerNamePlayerAttack);

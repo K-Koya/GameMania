@@ -17,13 +17,16 @@ namespace Survival
             {
                 AttackInfo attack = other.GetComponent<AttackInfo>();
 
-                _Life -= attack.PowerOnEnter;
-                if (_Life < 0)
+                if (attack)
                 {
-                    gameObject.SetActive(false);
-                    WaveEnemyManager.DefeatedEnemyCount++;
-                    PlayerStatus pSta = attack.Status as PlayerStatus;
-                    pSta.AddExp(_GiveExp);
+                    _Life -= attack.PowerOnEnter;
+                    if (_Life < 0)
+                    {
+                        gameObject.SetActive(false);
+                        WaveEnemyManager.DefeatedEnemyCount++;
+                        PlayerStatus pSta = attack.Status as PlayerStatus;
+                        pSta.AddExp(_GiveExp);
+                    }
                 }
             }
         }
@@ -37,13 +40,16 @@ namespace Survival
             {
                 AttackInfo attack = other.GetComponent<AttackInfo>();
 
-                _Life -= attack.PowerOnStay;
-                if (_Life < 0)
+                if (attack)
                 {
-                    gameObject.SetActive(false);
-                    WaveEnemyManager.DefeatedEnemyCount++;
-                    PlayerStatus pSta = attack.Status as PlayerStatus;
-                    pSta.AddExp(_GiveExp);
+                    _Life -= attack.PowerOnStay;
+                    if (_Life < 0)
+                    {
+                        gameObject.SetActive(false);
+                        WaveEnemyManager.DefeatedEnemyCount++;
+                        PlayerStatus pSta = attack.Status as PlayerStatus;
+                        pSta.AddExp(_GiveExp);
+                    }
                 }
             }
         }

@@ -17,12 +17,24 @@ namespace Survival
         [SerializeField, Tooltip("キャラクターの移動力")]
         float _MoveSpeed = 10f;
 
+        /// <summary>移動速度の強化レベル</summary>
+        byte _MoveSpeedLevel = 1;
+
+        /// <summary>移動速度の強化レベルの最大値</summary>
+        byte _MoveSpeedMaxLevel = 9;
+
+
         /// <summary>移動でリジッドボディにかける力</summary>
         Vector3 _ForceOfMove = default;
 
         /// <summary>リジッドボディ</summary>
         Rigidbody _Rb = default;
 
+
+        /// <summary>移動速度の強化レベル</summary>
+        public byte MoveSpeedLevel { get => _MoveSpeedLevel; }
+        /// <summary>移動速度の強化レベルの最大値</summary>
+        public byte MoveSpeedMaxLevel { get => _MoveSpeedMaxLevel; }
 
 
         // Start is called before the first frame update
@@ -43,6 +55,12 @@ namespace Survival
         void FixedUpdate()
         {
             _Rb.AddForce(_ForceOfMove, ForceMode.Acceleration);
+        }
+
+        /// <summary>移動速度の強化レベルを加算</summary>
+        public void AddMoveSpeedLevel()
+        {
+            _MoveSpeedLevel++;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Survival
 {
     /// <summary>‚½‚¯‚Ì‚±ê—p ’|‘„UŒ‚</summary>
-    public class BambooSpear : PlayerWepponBase
+    public class BambooSpear : PlayerWeaponBase
     {
         // Start is called before the first frame update
         void Start()

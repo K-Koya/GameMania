@@ -54,8 +54,14 @@ public class PauseManager : MonoBehaviour
         //ポーズ反転
         if (Input.GetButtonDown(_ButtonNamePause))
         {
-            _IsPaused = !_IsPaused;
-            _PauseMenu.SetActive(_IsPaused);
+            PauseOrder();
         }
+    }
+
+    //ポーズ指示
+    public void PauseOrder()
+    {
+        _IsPaused = !_IsPaused;
+        _PauseMenu.SetActive(_IsPaused);
     }
 }

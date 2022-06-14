@@ -21,7 +21,7 @@ namespace Survival
         float _MaxLife = 100f;
 
         [SerializeField, Tooltip("取得経験値量")]
-        int _Exp = 0;
+        int _Exp = 1;
 
         [SerializeField, Tooltip("次のレベルアップまでに必要な経験値量")]
         int _NextLevelExp = 6;
@@ -97,6 +97,14 @@ namespace Survival
         public void AddExp(short exp)
         {
             _Exp += exp;
+        }
+
+        /// <summary>体力を回復</summary>
+        /// <param name="Ratio">回復量 最大値との割合</param>
+        public void HealLife(float Ratio)
+        {
+            _Life += _MaxLife * Ratio;
+            if (_Life > _MaxLife) _Life = _MaxLife;
         }
     }
 }

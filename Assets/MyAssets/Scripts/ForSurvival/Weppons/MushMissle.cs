@@ -3,64 +3,46 @@ using UnityEngine;
 namespace Survival
 {
     /// <summary>きのこ専用 キノコミサイル</summary>
-    public class MushMissle : PlayerWepponBase
+    public class MushMissle : PlayerWeaponBase
     {
         [SerializeField, Tooltip("攻撃力")]
-        WepponInfomation _Power = default;
+        WeaponInfomation _Power = default;
 
         [SerializeField, Tooltip("発射間隔")]
-        WepponInfomation _Interval = default;
+        WeaponInfomation _Interval = default;
 
         [SerializeField, Tooltip("飛行速度")]
-        WepponInfomation _Speed = default;
+        WeaponInfomation _Speed = default;
 
         [SerializeField, Tooltip("大きさ")]
-        WepponInfomation _Size = default;
-
-        [SerializeField, Tooltip("攻撃が当たる敵のレイヤー")]
-        LayerMask _EnemyLayer = default;
-
-        [SerializeField, Tooltip("キノコミサイルプレハブ")]
-        GameObject _PrefMushMissle = null;
-
-        /// <summary>プレイヤーのステータス情報</summary>
-        StatusBase _PlayerStatus = null;
-
-        /// <summary>キノコミサイルオブジェクトを管理</summary>
-        ObjectPool<AttackInfoMovable> _PrefMushMisslePool = default;
+        WeaponInfomation _Size = default;
 
 
         /// <summary>発射間隔制御タイマー</summary>
         float _Timer = 0f;
 
         // Start is called before the first frame update
-        void Start()
+        protected override void Start()
         {
-            _WepponInfomations.Add(_Power);
-            _WepponInfomations.Add(_Interval);
-            _WepponInfomations.Add(_Speed);
-            _WepponInfomations.Add(_Size);
+            base.Start();
 
-            _PlayerStatus = GetComponent<StatusBase>();
-
-            _PrefMushMisslePool = new ObjectPool<AttackInfoMovable>(50);
-            for (int i = 0; i < _PrefMushMisslePool.Values.Length; i++)
-            {
-                GameObject obj = Instantiate(_PrefMushMissle);
-                obj.SetActive(false);
-                _PrefMushMisslePool.Values[i] = obj.GetComponent<AttackInfoMovable>();
-            }
+            _WeaponInfomations.Add(_Power);
+            _WeaponInfomations.Add(_Interval);
+            _WeaponInfomations.Add(_Speed);
+            _WeaponInfomations.Add(_Size);
         }
 
         protected override void DoAttack()
         {
+            if (_WeaponObjectPool == null) return;
+
             //発射間隔を制御
             _Timer += Time.deltaTime;
             float border = 1f / _Interval.NowLevelValue;
             if (_Timer > border)
             {
                 _Timer -= border;
-                foreach (var val in _PrefMushMisslePool.Values)
+                foreach (var val in _WeaponObjectPool.Values)
                 {
                     if (!val.gameObject.activeSelf)
                     {
