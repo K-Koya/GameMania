@@ -45,6 +45,8 @@ namespace Survival
             {
                 _EmitRbs[i] = _WeaponObjectPool.Values[i].gameObject.GetComponent<Rigidbody>(); ;
             }
+
+            gameObject.SetActive(false);
         }
 
 

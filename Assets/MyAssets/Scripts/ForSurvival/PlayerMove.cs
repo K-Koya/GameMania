@@ -17,7 +17,7 @@ namespace Survival
         [SerializeField, Tooltip("キャラクターの移動力")]
         float _MoveSpeed = 10f;
 
-        /// <summary>移動速度の強化レベル</summary>
+        [SerializeField, Tooltip("移動速度の強化レベル")]
         byte _MoveSpeedLevel = 1;
 
         /// <summary>移動速度の強化レベルの最大値</summary>
@@ -49,7 +49,7 @@ namespace Survival
             if (PauseManager.IsTimerStopped) return;
 
             _ForceOfMove = Vector3.forward * Input.GetAxis(_InputNameMoveVertical) + Vector3.right * Input.GetAxis(_InputNameMoveHorizontal);
-            _ForceOfMove = _ForceOfMove.normalized * _MoveSpeed;
+            _ForceOfMove = _ForceOfMove.normalized * (_MoveSpeed + _MoveSpeedLevel);
         }
 
         void FixedUpdate()

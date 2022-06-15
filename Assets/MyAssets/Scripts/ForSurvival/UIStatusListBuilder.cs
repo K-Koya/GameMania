@@ -31,6 +31,9 @@ namespace Survival
         [SerializeField, Tooltip("武器2のスキルのレベルアップボタンUI")]
         Button[] _Weapon2LevelUpButtons = default;
 
+        [SerializeField, Tooltip("武器2のスキルの解放ボタンUI")]
+        Button _Weapon2UnlockButton = default;
+
         [SerializeField, Tooltip("ture : レベルアップ時であり、レベルアップボタンが押せるリストを作る")]
         bool _IsUseButton = false;
 
@@ -49,7 +52,8 @@ namespace Survival
         // Start is called before the first frame update
         void Start()
         {
-
+            if(_Weapon2UnlockButton) _Weapon2UnlockButton.interactable = false;
+            foreach(var button in _Weapon2LevelUpButtons) button.interactable = false;
         }
 
         // Update is called once per frame
@@ -100,6 +104,9 @@ namespace Survival
                 }
                 else _Weapon1LevelTexts[i].text = $"Lv.{_Weapon1Info.WeaponInfomations[i].Level}";
             }
+
+            //武器2のLock表示
+            if(_IsUseButton && _StatusInfo.Level >= 5) _Weapon2UnlockButton.interactable = true;
 
             //武器2の表示を構築
             for (int i = 0; i < _Weapon2SubTitleTexts.Length; i++)

@@ -118,7 +118,7 @@ Transform:
   m_Children:
   - {fileID: 5929893835214399669}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &587951546605508127
 SphereCollider:
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _MovePattern: 2
-  _MoveSpeed: 2.5
+  _MoveSpeed: 3.5
   _ForceOfMove: {x: 0, y: 0, z: 0}
 --- !u!114 &4880712902867483216
 MonoBehaviour:

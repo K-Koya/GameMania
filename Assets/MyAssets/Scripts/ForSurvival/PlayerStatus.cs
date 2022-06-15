@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Survival
 {
@@ -25,6 +26,9 @@ namespace Survival
 
         [SerializeField, Tooltip("次のレベルアップまでに必要な経験値量")]
         int _NextLevelExp = 6;
+
+        [SerializeField, Tooltip("レベルアップしたときに実行したいメソッドをアサイン")]
+        UnityEvent _RequireForLevelup = default;
         #endregion
 
         #region プロパティ
@@ -54,6 +58,7 @@ namespace Survival
                 _Level++;
                 _Exp -= _NextLevelExp;
                 _NextLevelExp += _NextLevelExp / 2;
+                _RequireForLevelup.Invoke();
             }
         }
 
@@ -106,5 +111,6 @@ namespace Survival
             _Life += _MaxLife * Ratio;
             if (_Life > _MaxLife) _Life = _MaxLife;
         }
+
     }
 }

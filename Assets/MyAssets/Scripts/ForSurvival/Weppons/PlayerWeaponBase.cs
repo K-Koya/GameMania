@@ -51,9 +51,25 @@ namespace Survival
             DoAttack();
         }
 
+
+        public void DoLevelUp(string name)
+        {
+            bool isNameMatched = false;
+            for(int i = 0; i < _WeaponInfomations.Count; i++)
+            {
+                if (_WeaponInfomations[i].Name == name)
+                {
+                    _WeaponInfomations[i].DoLevelUp();
+                    isNameMatched = true;
+                    break;
+                }
+            }
+            if (!isNameMatched) Debug.LogError($"{name} ‚Æ‚¢‚¤–¼‘O‚Ì•ŠíƒXƒLƒ‹‚Í‘¶İ‚µ‚Ü‚¹‚ñ");
+        }
+
         /// <summary>•Ší‚Ì‚Âî•ñ</summary>
         [System.Serializable]
-        public struct WeaponInfomation
+        public class WeaponInfomation
         {
             [Tooltip("î•ñ–¼")]
             public string Name;
