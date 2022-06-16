@@ -57,7 +57,7 @@ namespace Survival
             {
                 _Level++;
                 _Exp -= _NextLevelExp;
-                _NextLevelExp += _NextLevelExp / 2;
+                _NextLevelExp += _NextLevelExp / 3;
                 _RequireForLevelup.Invoke();
             }
         }

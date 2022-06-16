@@ -10,6 +10,14 @@ namespace Survival
         [SerializeField, Tooltip("倒したときにプレイヤーに与えられる経験値量")]
         short _GiveExp = 1;
 
+        /// <summary>プレイヤーのリジッドボディ</summary>
+        Rigidbody _Rb = null;
+
+        void Start()
+        {
+            _Rb = GetComponent<Rigidbody>();
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             //プレイヤーの攻撃に接触するとダメージ
@@ -26,6 +34,14 @@ namespace Survival
                         WaveEnemyManager.DefeatedEnemyCount++;
                         PlayerStatus pSta = attack.Status as PlayerStatus;
                         pSta.AddExp(_GiveExp);
+                    }
+                    else
+                    {
+                        if(Random.value > 0.5f)
+                        {
+                            Vector3 pow = other.transform.position - transform.position;
+                            _Rb.AddForce(pow, ForceMode.Impulse);
+                        }
                     }
                 }
             }
@@ -49,6 +65,11 @@ namespace Survival
                         WaveEnemyManager.DefeatedEnemyCount++;
                         PlayerStatus pSta = attack.Status as PlayerStatus;
                         pSta.AddExp(_GiveExp);
+                    }
+                    else
+                    {
+                        Vector3 pow = other.transform.position - transform.position;
+                       _Rb.AddForce(pow, ForceMode.Impulse);
                     }
                 }
             }

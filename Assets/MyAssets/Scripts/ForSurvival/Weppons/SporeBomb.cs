@@ -75,7 +75,7 @@ namespace Survival
                             _EmitRbs[k].AddForce(emitPower, ForceMode.VelocityChange);
 
                             val.DataSet(_PlayerStatus, _Power.NowLevelValue, 0, 0, Vector3.zero, byte.MaxValue, _Remaining.NowLevelValue);
-                            val.transform.position = transform.position + Vector3.up * 5f;
+                            val.transform.position = transform.position + Vector3.up;
                             val.transform.localScale = Vector3.one * _Size.NowLevelValue;
                             break;
                         }

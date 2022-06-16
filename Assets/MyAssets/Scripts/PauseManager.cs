@@ -58,6 +58,11 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        Time.timeScale = 1f;
+    }
+
     //ポーズ指示
     public void PauseOrder()
     {

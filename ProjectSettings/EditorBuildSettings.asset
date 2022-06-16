@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ForSurvival/Title.unity
+    guid: 42926ff893243da48b50842f8a3abd6d
+  - enabled: 1
+    path: Assets/Scenes/ForSurvival/SurvivalForMushroom.unity
+    guid: 4d334f78193c14a43b3f7e1551058ce5
+  - enabled: 1
+    path: Assets/Scenes/ForSurvival/ResultForMushroom.unity
+    guid: 9025767e26a94b94d8f2057ef241c100
+  - enabled: 1
+    path: Assets/Scenes/ForSurvival/ExplainForMushroom.unity
+    guid: 7319a525f46f2e046bd2018c0019b28f
   m_configObjects: {}

@@ -16,6 +16,9 @@ namespace Survival
         /// <summary>true : ゲームオーバー演出を起動した</summary>
         bool _IsRunGameoverDirecting = false;
 
+        /// <summary>ゲーム結果データを保管するコンポーネント</summary>
+        ResultDataHoldUtility _ResultDataHoldUtility = null;
+
         [SerializeField, Tooltip("ゲームオーバー時に実行したいメソッドをアサイン")]
         UnityEvent _ForGameover = null;
 
@@ -24,6 +27,7 @@ namespace Survival
         void Start()
         {
             _Player = FindObjectOfType<PlayerStatus>();
+            _ResultDataHoldUtility = GetComponent<ResultDataHoldUtility>();
         }
 
         // Update is called once per frame
@@ -31,6 +35,7 @@ namespace Survival
         {
             if (_IsGameEnd && !_IsRunGameoverDirecting)
             {
+                _ResultDataHoldUtility.SetData();
                 StartCoroutine(GameoverDirecting());
                 _IsRunGameoverDirecting = true;
             }
