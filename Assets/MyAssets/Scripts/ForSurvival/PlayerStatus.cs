@@ -10,7 +10,7 @@ namespace Survival
     {
         #region メンバ
         /// <summary>プレイヤーから離れていて削除対象になる距離/summary>
-        public const float FAR_POINT = 26f;
+        public const float FAR_POINT = 35f;
 
         /// <summary>プレイヤー位置</summary>
         public static Transform Transform = default;
@@ -57,7 +57,7 @@ namespace Survival
             {
                 _Level++;
                 _Exp -= _NextLevelExp;
-                _NextLevelExp += _NextLevelExp / 3;
+                _NextLevelExp += _NextLevelExp / 4;
                 _RequireForLevelup.Invoke();
             }
         }

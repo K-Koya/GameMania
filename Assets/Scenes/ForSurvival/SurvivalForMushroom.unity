@@ -1491,7 +1491,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 421d520579a325944a0403c9e5c5ed3c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -3639,7 +3639,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603775431}
   serializedVersion: 2
-  m_Mass: 50
+  m_Mass: 100
   m_Drag: 3
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -4045,7 +4045,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   _Pref: {fileID: 8477535695123077019, guid: aedf519ecf8480946b664655c76b71bc, type: 3}
-  _NumberOfWeapon: 25
+  _NumberOfWeapon: 40
   _Power:
     Name: "\u653B\u6483\u529B"
     BaseValue: 10
@@ -4054,10 +4054,10 @@ MonoBehaviour:
     StrengthenRate: 0.5
   _Interval:
     Name: "\u5F3E\u306E\u767A\u5C04\u9593\u9694"
-    BaseValue: 1.5
+    BaseValue: 3
     Level: 1
     MaxLevel: 9
-    StrengthenRate: 0.2
+    StrengthenRate: 0.15
   _Speed:
     Name: "\u5F3E\u306E\u98DB\u884C\u901F\u5EA6"
     BaseValue: 4
@@ -4724,25 +4724,31 @@ MonoBehaviour:
   - name: Wave1
     SummonEnemies:
     - EnemyId: 0
-      Count: 50
+      Count: 1000
   - name: Wave2
     SummonEnemies:
+    - EnemyId: 1
+      Count: 500
     - EnemyId: 1
       Count: 50
   - name: Wave3
     SummonEnemies:
     - EnemyId: 0
-      Count: 1000
+      Count: 700
+    - EnemyId: 0
+      Count: 300
   - name: Wave4
+    SummonEnemies:
+    - EnemyId: 0
+      Count: 500
+    - EnemyId: 1
+      Count: 500
+  - name: Wave5
     SummonEnemies:
     - EnemyId: 0
       Count: 200
     - EnemyId: 1
-      Count: 100
-  - name: Wave5
-    SummonEnemies:
-    - EnemyId: 0
-      Count: 50
+      Count: 200
     - EnemyId: 2
       Count: 1
 --- !u!114 &705106768
@@ -5857,9 +5863,9 @@ MonoBehaviour:
   - {fileID: 1783295892}
   - {fileID: 1780408636}
   _Weapon2LevelTexts:
-  - {fileID: 1954821272}
-  - {fileID: 1954821272}
-  - {fileID: 1954821272}
+  - {fileID: 511784682}
+  - {fileID: 394588245}
+  - {fileID: 1069505657}
   - {fileID: 1954821272}
   _Weapon2LevelUpButtons: []
   _Weapon2UnlockButton: {fileID: 0}
@@ -8140,7 +8146,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0450713e8af3e394c931c3d696bf79e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12239,10 +12245,10 @@ MonoBehaviour:
   _NumberOfWeapon: 10
   _Power:
     Name: "\u653B\u6483\u529B"
-    BaseValue: 0.05
+    BaseValue: 0.1
     Level: 1
     MaxLevel: 9
-    StrengthenRate: 0.25
+    StrengthenRate: 0.2
   _NumberOfEmittion:
     Name: "\u5F3E\u306E\u767A\u5C04\u6570"
     BaseValue: 2
@@ -12261,7 +12267,7 @@ MonoBehaviour:
     Level: 1
     MaxLevel: 9
     StrengthenRate: 0.4
-  _EmitPowerMax: {x: 7.5, y: 7.5}
+  _EmitPowerMax: {x: 5, y: 5}
 --- !u!1 &1595791632
 GameObject:
   m_ObjectHideFlags: 0
@@ -13059,7 +13065,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0450713e8af3e394c931c3d696bf79e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13115,8 +13121,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672983042}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5628138, y: -0.83662224, z: -1.2762566}
+  m_LocalRotation: {x: -0.13325743, y: -0.25503454, z: 0.035369862, w: -0.95705223}
+  m_LocalPosition: {x: -2.3947868, y: 5.0166745, z: -16.769104}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

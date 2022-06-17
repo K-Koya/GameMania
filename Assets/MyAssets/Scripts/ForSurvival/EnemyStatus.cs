@@ -37,11 +37,8 @@ namespace Survival
                     }
                     else
                     {
-                        if(Random.value > 0.5f)
-                        {
-                            Vector3 pow = other.transform.position - transform.position;
-                            _Rb.AddForce(pow, ForceMode.Impulse);
-                        }
+                        Vector3 pow = (transform.position - other.transform.position) * 5f;
+                        _Rb.AddForce(pow, ForceMode.Impulse);
                     }
                 }
             }
@@ -68,8 +65,8 @@ namespace Survival
                     }
                     else
                     {
-                        Vector3 pow = other.transform.position - transform.position;
-                       _Rb.AddForce(pow, ForceMode.Impulse);
+                        Vector3 pow = transform.position - other.transform.position;
+                       _Rb.AddForce(pow);
                     }
                 }
             }

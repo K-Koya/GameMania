@@ -86,6 +86,7 @@ namespace Survival
                     _WaveCount += 1;
                     for (int i = 0; i < _EnemyDataForWaves.Length; i++)
                     {
+                        if (_EnemyDataForWaves[_WaveCount].SummonEnemies.Length <= i) continue;
                         uint id = _EnemyDataForWaves[_WaveCount].SummonEnemies[i].EnemyId;
                         _Enemies[id] = new ObjectPool<GameObject>(_EnemyDataForWaves[_WaveCount].SummonEnemies[i].Count);
 
@@ -126,6 +127,7 @@ namespace Survival
         void FixedUpdate()
         {
             //ìGÇê∂ê¨
+            if (_WaveCount < 0) return;
             uint[] ids = _EnemyDataForWaves[_WaveCount].SummonEnemies.Select(ed => ed.EnemyId).ToArray();
             for (uint i = 0; i < _Enemies.Length; i++)
             {

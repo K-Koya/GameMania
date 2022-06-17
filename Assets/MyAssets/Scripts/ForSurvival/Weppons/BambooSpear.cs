@@ -36,6 +36,8 @@ namespace Survival
             _WeaponInfomations.Add(_Range);
 
             _Rb = GetComponentInParent<Rigidbody>();
+
+            gameObject.SetActive(false);
         }
 
 
