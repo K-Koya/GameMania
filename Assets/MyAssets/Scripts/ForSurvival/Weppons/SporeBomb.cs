@@ -7,6 +7,9 @@ namespace Survival
     /// <summary>‚«‚Ì‚±ê—p –Eq”š’e</summary>
     public class SporeBomb : PlayerWeaponBase
     {
+        /// <summary>”š’e•úoŠÔŠu</summary>
+        const float _EMITTION_TIME = 2.5f;
+
         [SerializeField, Tooltip("UŒ‚—Í")]
         WeaponInfomation _Power = default;
 
@@ -54,10 +57,9 @@ namespace Survival
         {
             //”­ËŠÔŠu‚ğ§Œä
             _Timer += Time.deltaTime;
-            float border = 2.5f;
-            if (_Timer > border)
+            if (_Timer > _EMITTION_TIME)
             {
-                _Timer -= border;
+                _Timer -= _EMITTION_TIME;
 
                 for (int i = 0; i < _NumberOfEmittion.NowLevelValue; i++)
                 {

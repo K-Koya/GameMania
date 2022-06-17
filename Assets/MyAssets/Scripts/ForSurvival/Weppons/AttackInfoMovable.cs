@@ -13,7 +13,7 @@ namespace Survival
         Vector3 _Direction = Vector3.zero;
 
         /// <summary>ŠÑ’Ê‰ñ”</summary>
-        byte _PenetrateCount = 1;
+        byte _PenetrateCount = byte.MaxValue;
 
         /// <summary>‘¶İ‚Å‚«‚éŠÔ</summary>
         float _AliveTime = 100f;
