@@ -9,11 +9,26 @@ namespace MineDetector
         /// <summary>蓋オブジェクトのレンダーラー</summary>
         Renderer _Renderer = default;
 
-        /// <summary>元のマテリアル</summary>
+        /// <summary>当該セルの情報</summary>
+        CellController _Cell = null;
+
+        /// <summary>元の空白マテリアル</summary>
         Material _Original = default;
 
-        [SerializeField, Tooltip("マウスカーソルを合わせたときに使うマテリアル")]
-        Material _OveredMouse = default;
+        [SerializeField, Tooltip("マウスカーソルを合わせたときに使う空白マテリアル")]
+        Material _OriginalOveredMouse = default;
+
+        [SerializeField, Tooltip("元の旗マテリアル")]
+        Material _BuiltFlag = default;
+
+        [SerializeField, Tooltip("マウスカーソルを合わせたときに使う旗マテリアル")]
+        Material _BuiltFlagOveredMouse = default;
+
+        [SerializeField, Tooltip("元のはてなマテリアル")]
+        Material _Question = default;
+
+        [SerializeField, Tooltip("マウスカーソルを合わせたときに使うはてなマテリアル")]
+        Material _QuestionOveredMouse = default;
 
         [SerializeField, Tooltip("True : マウスカーソルが合っている")]
         bool _IsOveredMouse = false;
@@ -24,8 +39,12 @@ namespace MineDetector
         [SerializeField, Tooltip("True : 旗を建てている")]
         bool _IsBuiltFlag = false;
 
+
         /// <summary>True : 公開済み</summary>
         public bool IsOpenned { get => _IsOpenned; }
+
+        /// <summary>セルの位置</summary>
+        public Vector2Int Index { get => _Cell.Index; }
 
 
 
@@ -34,6 +53,8 @@ namespace MineDetector
         {
             _Renderer = GetComponent<Renderer>();
             _Original = _Renderer.materials[0];
+
+            _Cell = GetComponentInParent<CellController>();
         }
 
         // Update is called once per frame
@@ -41,12 +62,27 @@ namespace MineDetector
         {
             if (_IsOveredMouse)
             {
-                _Renderer.material = _OveredMouse;
+                if (_IsBuiltFlag)
+                {
+                    _Renderer.material = _BuiltFlagOveredMouse;
+                }
+                else
+                {
+                    _Renderer.material = _OriginalOveredMouse;
+                }
+                
                 _IsOveredMouse = false;
             }
             else
             {
-                _Renderer.material = _Original;
+                if (_IsBuiltFlag)
+                {
+                    _Renderer.material = _BuiltFlag;
+                }
+                else
+                {
+                    _Renderer.material = _Original;
+                }
             }
         }
 
@@ -59,6 +95,9 @@ namespace MineDetector
         /// <summary>蓋を外す</summary>
         public void Open()
         {
+            //ゲーム開始メソッドを未実行なら実行する
+            if (MineDetectorCellMap.GameStart != null) MineDetectorCellMap.GameStart(Index.x, Index.y);
+
             //旗が立っていれば外さない
             if (_IsBuiltFlag) return;
 

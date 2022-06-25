@@ -7,7 +7,7 @@ using UnityEngine;
 static public partial class Extensions
 {
     /// <summary>—×‚è‡‚¢æ</summary>
-    public enum KindOfNeighbor
+    public enum KindOfNeighbor : byte
     {
         /// <summary>Ÿ</summary>
         Next = 0,
