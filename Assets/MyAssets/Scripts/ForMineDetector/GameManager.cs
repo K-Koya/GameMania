@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MineDetector
 {
@@ -17,7 +18,7 @@ namespace MineDetector
 
 
         /// <summary>ゲームの進行状態</summary>
-        public static GameState State { get => _State; set => _State = value; }
+        public static GameState State { get => _State; }
 
         /// <summary>経過時間</summary>
         public static double Timer { get => _Timer; }
@@ -29,6 +30,7 @@ namespace MineDetector
         {
             _CellMap = GetComponent<MineDetectorCellMap>();
             _State = GameState.Standby;
+            _Timer = 0f;
         }
 
         // Update is called once per frame
@@ -42,6 +44,24 @@ namespace MineDetector
 
                     break;
             }
+        }
+
+        /// <summary>シーンを再ロード</summary>
+        public void ReloadScene()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        /// <summary>ゲームスタートしてくれっていう要求</summary>
+        public static void GameStartCall()
+        {
+            _State = GameState.Playing;
+        }
+
+        /// <summary>ゲームに負けたことにしろっていう要求</summary>
+        public static void GameFaultCall()
+        {
+            _State = GameState.Fault;
         }
     }
 

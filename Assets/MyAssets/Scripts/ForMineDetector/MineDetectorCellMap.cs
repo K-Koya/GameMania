@@ -11,6 +11,9 @@ namespace MineDetector
         /// <summary>ゲーム盤の1辺のマスの数の最小値</summary>
         const int _MIN_MAP_LENGTH = 10;
 
+        /// <summary>ゲーム盤の1辺のマスの数の最大値</summary>
+        const int _MAN_MAP_LENGTH = 400;
+
         /// <summary>爆弾の最小数</summary>
         const int _MIN_NUMBER_OF_MINE = 10;
 
@@ -19,10 +22,7 @@ namespace MineDetector
 
         [SerializeField,Range(_MIN_NUMBER_OF_MINE, 10000) , Tooltip("爆弾の数")]
         int _NumberOfMine = 10;
-
-        [SerializeField, Tooltip("ゲーム盤の1辺のマスの数の最大値")]
-        int _LengthLimit = 10000;
-        
+                
         [SerializeField, Tooltip("ゲーム盤の横縦数(Length Limit を超える場合は Length Limit に丸められる)")]
         Vector2Int _MapSize = new Vector2Int(10, 10);
 
@@ -58,8 +58,8 @@ namespace MineDetector
         public void Generate()
         {
             //ゲーム盤の最小値・最大値指定
-            int sizeX = Mathf.Clamp(_MapSize.x, _MIN_MAP_LENGTH, _LengthLimit);
-            int sizeY = Mathf.Clamp(_MapSize.y, _MIN_MAP_LENGTH, _LengthLimit);
+            int sizeX = Mathf.Clamp(_MapSize.x, _MIN_MAP_LENGTH, _MAN_MAP_LENGTH);
+            int sizeY = Mathf.Clamp(_MapSize.y, _MIN_MAP_LENGTH, _MAN_MAP_LENGTH);
 
             //ゲーム盤サイズ確定
             _Map = new CellController[sizeY, sizeX];
@@ -150,6 +150,7 @@ namespace MineDetector
 
             //ゲーム開始メソッドから登録解除
             GameStart = null;
+            GameManager.GameStartCall();
         }
 
         /// <summary>fromから周辺のマスを開き、空白ならその周囲のマスも開く</summary>

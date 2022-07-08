@@ -108,8 +108,20 @@ namespace MineDetector
             _IsOpenned = true;
             gameObject.SetActive(!_IsOpenned);
 
-            //このマスが空白なら周囲のマスを開ける
-            if (_Cell.Contant == CellController.EMPTY_CONTENT) MineDetectorCellMap.CheckAround(Index.y, Index.x);
+            //マスの中身によって処理を変える
+            switch(_Cell.Contant)
+            {
+                //このマスが空白なら周囲のマスを開ける
+                case CellController.EMPTY_CONTENT:
+                    MineDetectorCellMap.CheckAround(Index.y, Index.x);
+                    break;
+
+                //このマスが爆弾なら敗北しゲーム終了
+                case CellController.MINE_CONTENT:
+                    GameManager.GameFaultCall();
+
+                    break;
+            }
         }
 
         /// <summary>旗を建てているときは降ろし、旗を降ろしているときは建てる</summary>
