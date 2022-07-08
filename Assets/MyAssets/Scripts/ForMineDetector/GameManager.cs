@@ -12,9 +12,15 @@ namespace MineDetector
         /// <summary>ゲーム盤</summary>
         MineDetectorCellMap _CellMap = default;
 
+        /// <summary>経過時間</summary>
+        static double _Timer = 0f;
+
 
         /// <summary>ゲームの進行状態</summary>
         public static GameState State { get => _State; set => _State = value; }
+
+        /// <summary>経過時間</summary>
+        public static double Timer { get => _Timer; }
 
 
 
@@ -28,7 +34,14 @@ namespace MineDetector
         // Update is called once per frame
         void Update()
         {
+            switch (_State)
+            {
+                //ゲーム中
+                case GameState.Playing:
+                    _Timer += Time.deltaTime;
 
+                    break;
+            }
         }
     }
 

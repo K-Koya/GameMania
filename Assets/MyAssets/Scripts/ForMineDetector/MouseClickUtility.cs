@@ -32,7 +32,7 @@ namespace MineDetector
         void Update()
         {
             MouseClickManagement();
-        }
+        } 
 
 
         /// <summary>マウスクリック操作</summary>

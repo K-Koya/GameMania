@@ -55,6 +55,7 @@ namespace MineDetector
             _Original = _Renderer.materials[0];
 
             _Cell = GetComponentInParent<CellController>();
+            _Cell.OpenMyself = Open;
         }
 
         // Update is called once per frame
@@ -96,13 +97,19 @@ namespace MineDetector
         public void Open()
         {
             //ゲーム開始メソッドを未実行なら実行する
-            if (MineDetectorCellMap.GameStart != null) MineDetectorCellMap.GameStart(Index.x, Index.y);
+            MineDetectorCellMap.GameStart?.Invoke(Index.x, Index.y);
+
+            //既にこのマスが開いていれば離脱
+            if (_IsOpenned) return;
 
             //旗が立っていれば外さない
             if (_IsBuiltFlag) return;
 
             _IsOpenned = true;
             gameObject.SetActive(!_IsOpenned);
+
+            //このマスが空白なら周囲のマスを開ける
+            if (_Cell.Contant == CellController.EMPTY_CONTENT) MineDetectorCellMap.CheckAround(Index.y, Index.x);
         }
 
         /// <summary>旗を建てているときは降ろし、旗を降ろしているときは建てる</summary>
