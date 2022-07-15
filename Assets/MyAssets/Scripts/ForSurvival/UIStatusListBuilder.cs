@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Survival
@@ -9,6 +10,9 @@ namespace Survival
     {
         [SerializeField, Tooltip("UIテキストの内、プレイヤーのステータス機能の情報")]
         TextMeshProUGUI[] _PlayerStatusInfoTexts = default;
+
+        [SerializeField, Tooltip("プレイヤーのステータススキルの回復ボタンUI")]
+        Button _PlayerStatusHealButton = default;
 
         [SerializeField, Tooltip("プレイヤーのステータススキルのレベルアップボタンUI")]
         Button[] _PlayerStatusLevelUpButtons = default;
@@ -34,6 +38,9 @@ namespace Survival
         [SerializeField, Tooltip("武器2のスキルの解放ボタンUI")]
         Button _Weapon2UnlockButton = default;
 
+        [SerializeField, Tooltip("武器2のスキルの解放ボタンのテキスト")]
+        TextMeshProUGUI _Weapon2UnlockText = default;
+
         [SerializeField, Tooltip("ture : レベルアップ時であり、レベルアップボタンが押せるリストを作る")]
         bool _IsUseButton = false;
 
@@ -49,17 +56,17 @@ namespace Survival
         [SerializeField, Tooltip("プレイヤー情報")]
         PlayerStatus _StatusInfo = null;
 
+        [SerializeField, Tooltip("武器2を解放するのに必要なレベル値")]
+        short _Weapon2UnlockLevel = 10;
+
+        /// <summary>選択中のボタンを指定</summary>
+        System.Action<GameObject> SetSelected = null;
+
         // Start is called before the first frame update
         void Start()
         {
             if(_Weapon2UnlockButton) _Weapon2UnlockButton.interactable = false;
             foreach(var button in _Weapon2LevelUpButtons) button.interactable = false;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         void OnEnable()
@@ -106,7 +113,10 @@ namespace Survival
             }
 
             //武器2のLock表示
-            if(_IsUseButton && _StatusInfo.Level >= 5) _Weapon2UnlockButton.interactable = true;
+            if(_IsUseButton && _StatusInfo.Level >= _Weapon2UnlockLevel) _Weapon2UnlockButton.interactable = true;
+
+            //武器2の解放ボタンテキスト
+            _Weapon2UnlockText.text = $"Lv.{_Weapon2UnlockLevel}以上\nで解放可能";
 
             //武器2の表示を構築
             for (int i = 0; i < _Weapon2SubTitleTexts.Length; i++)
@@ -124,6 +134,13 @@ namespace Survival
                     else _Weapon2LevelTexts[i].text = $"Lv.{nowLevel} → Lv.{nextLevel}";
                 }
                 else _Weapon2LevelTexts[i].text = $"Lv.{_Weapon2Info.WeaponInfomations[i].Level}";
+            }
+
+            //必ず回復ボタンにフォーカスさせる
+            if (_IsUseButton)
+            {
+                if(SetSelected == null) SetSelected = FindObjectOfType<EventSystem>().SetSelectedGameObject;
+                SetSelected?.Invoke(_PlayerStatusHealButton.gameObject);
             }
         }
 

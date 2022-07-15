@@ -22,7 +22,9 @@ namespace Survival
         /// <summary>移動用メソッド</summary>
         Action Move = default;
 
-        
+        [SerializeField, Tooltip("地面用タグ名")]
+        string _TagNameGround = "Ground";
+
 
         // Start is called before the first frame update
         void Start()
@@ -85,6 +87,23 @@ namespace Survival
             GoStraight,
             /// <summary>プレイヤーに近づくように移動</summary>
             Approach,
+        }
+
+
+        void OnCollisionStay(Collision collision)
+        {
+            if (collision.gameObject.CompareTag(_TagNameGround))
+            {
+                _Rb.useGravity = false;
+            }
+        }
+
+        void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.CompareTag(_TagNameGround))
+            {
+                _Rb.useGravity = true;
+            }
         }
     }
 }

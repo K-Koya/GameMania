@@ -57,7 +57,7 @@ namespace Survival
             {
                 _Level++;
                 _Exp -= _NextLevelExp;
-                _NextLevelExp += _NextLevelExp / 4;
+                _NextLevelExp += _NextLevelExp / 3;
                 _RequireForLevelup.Invoke();
             }
         }
@@ -77,6 +77,12 @@ namespace Survival
                 if(_Life < 0)
                 {
                     gameObject.SetActive(false);
+                    ParticleManager.Emit((int)ParticleManager.Kind.PlayerDefeated, transform, transform.localScale * 3f);
+                    SEManager.Emit((int)SEManager.Kind.PlayerDefeated, transform);
+                }
+                else
+                {
+                    ParticleManager.Emit((int)ParticleManager.Kind.PlayerDamaged, transform, transform.localScale * 2f);
                 }
             }
         }
@@ -93,6 +99,13 @@ namespace Survival
                 if (_Life < 0)
                 {
                     gameObject.SetActive(false);
+                    ParticleManager.Emit((int)ParticleManager.Kind.PlayerDefeated, transform, transform.localScale * 3f);
+                    SEManager.Emit((int)SEManager.Kind.PlayerDefeated, transform);
+                }
+                else
+                {
+                    ParticleManager.Emit((int)ParticleManager.Kind.PlayerDamaged, transform, transform.localScale * 0.75f);
+                    SEManager.Emit((int)SEManager.Kind.PlayerDamaged, transform);
                 }
             }
         }
@@ -110,6 +123,7 @@ namespace Survival
         {
             _Life += _MaxLife * Ratio;
             if (_Life > _MaxLife) _Life = _MaxLife;
+            SEManager.Emit((int)SEManager.Kind.PlayerHealing, transform);
         }
 
     }

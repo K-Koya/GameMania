@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>ポーズ制御コンポーネント</summary>
 public class PauseManager : MonoBehaviour
@@ -20,6 +21,12 @@ public class PauseManager : MonoBehaviour
     [SerializeField, Tooltip("表示するポーズメニュー")]
     GameObject _PauseMenu = default;
 
+    [SerializeField, Tooltip("ポーズメニューで始めにフォーカスするボタンオブジェクト")]
+    GameObject _FirstSelectButtonObj = default;
+
+    /// <summary>選択中のボタンを指定</summary>
+    System.Action<GameObject> SetSelected = null;
+
 
     /// <summary>true : 時間停止中</summary>
     public static bool IsTimerStopped { get => _IsTimerStopped; set => _IsTimerStopped = value; }
@@ -33,6 +40,8 @@ public class PauseManager : MonoBehaviour
         _IsTimerStopped = false;
         _NowTimeScale = 1f;
         Time.timeScale = 1f;
+
+        SetSelected = FindObjectOfType<EventSystem>().SetSelectedGameObject;
     }
 
     // Update is called once per frame
@@ -68,5 +77,6 @@ public class PauseManager : MonoBehaviour
     {
         _IsPaused = !_IsPaused;
         _PauseMenu.SetActive(_IsPaused);
+        if (_IsPaused && _FirstSelectButtonObj) SetSelected?.Invoke(_FirstSelectButtonObj);
     }
 }

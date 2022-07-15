@@ -23,6 +23,8 @@ namespace Survival
         /// <summary>移動速度の強化レベルの最大値</summary>
         byte _MoveSpeedMaxLevel = 9;
 
+        [SerializeField, Tooltip("地面用タグ名")]
+        string _TagNameGround = "Ground";
 
         /// <summary>移動でリジッドボディにかける力</summary>
         Vector3 _ForceOfMove = default;
@@ -61,6 +63,22 @@ namespace Survival
         public void AddMoveSpeedLevel()
         {
             _MoveSpeedLevel++;
+        }
+
+        void OnCollisionStay(Collision collision)
+        {
+            if (collision.gameObject.CompareTag(_TagNameGround))
+            {
+                _Rb.useGravity = false;
+            }
+        }
+
+        void OnCollisionExit(Collision collision)
+        {
+            if (collision.gameObject.CompareTag(_TagNameGround))
+            {
+                _Rb.useGravity = true;
+            }
         }
     }
 }

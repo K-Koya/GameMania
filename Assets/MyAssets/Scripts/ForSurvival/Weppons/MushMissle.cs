@@ -55,9 +55,11 @@ namespace Survival
                         }
 
                         val.gameObject.SetActive(true);
-                        val.DataSet(_PlayerStatus, 0, _Power.NowLevelValue, _Speed.NowLevelValue, dir, 1, 100f);
+                        val.DataSet(_PlayerStatus, 0, _Power.NowLevelValue, _Speed.NowLevelValue, dir, (byte)((_Size.Level + 1) / 2), 100f) ;
                         val.transform.position = transform.position + Vector3.up * 0.1f;
+                        val.transform.forward = -dir;
                         val.transform.localScale = Vector3.one * _Size.NowLevelValue;
+                        SEManager.Emit((int)SEManager.Kind.PlayerWeapon1, transform);
                         break;
                     }
                 }

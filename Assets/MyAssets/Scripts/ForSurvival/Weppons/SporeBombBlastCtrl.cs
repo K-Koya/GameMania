@@ -12,7 +12,7 @@ namespace Survival
         /// <summary>爆発範囲エフェクト</summary>
         GameObject _BlastEffect = null;
 
-        [SerializeField, Tooltip("true : 着弾した")]
+        /// <summary>true : 着弾した</summary>
         bool _IsLanding = false;
 
         /// <summary>本オブジェクトのリジッドボディ</summary>
@@ -24,6 +24,9 @@ namespace Survival
         /// <summary>本オブジェクトのコライダーの元の半径</summary>
         float _BaseColliderRadius = 1f;
 
+        /// <summary>アニメーションを再生するデリゲート</summary>
+        System.Action<int> _PlayAnim = null;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -32,6 +35,8 @@ namespace Survival
             _SphereCollider = GetComponent<SphereCollider>();
             _Rb = GetComponent<Rigidbody>();
             _BaseColliderRadius = _SphereCollider.radius;
+
+            _PlayAnim = _BlastEffect.GetComponent<Animator>().Play;
 
             OnEnable();
         }
@@ -63,10 +68,12 @@ namespace Survival
                 _IsLanding = true;
                 _AIM.enabled = true;
                 _BlastEffect.SetActive(true);
+                _PlayAnim(0);
                 _SphereCollider.radius = _BaseColliderRadius * 10f;
                 _Rb.velocity = Vector3.zero;
                 _Rb.useGravity = false;
                 gameObject.layer = LayerManager.PlayerAttack;
+                SEManager.Emit((int)SEManager.Kind.PlayerWeapon2, transform);
             }
         }
     }

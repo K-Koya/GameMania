@@ -10,7 +10,7 @@ namespace Survival
         [SerializeField, Tooltip("倒したときにプレイヤーに与えられる経験値量")]
         short _GiveExp = 1;
 
-        /// <summary>プレイヤーのリジッドボディ</summary>
+        /// <summary>敵のリジッドボディ</summary>
         Rigidbody _Rb = null;
 
         void Start()
@@ -31,15 +31,19 @@ namespace Survival
                     if (_Life < 0)
                     {
                         gameObject.SetActive(false);
+                        ParticleManager.Emit((int)ParticleManager.Kind.EnemyDefeated, transform, transform.localScale);
                         WaveEnemyManager.DefeatedEnemyCount++;
                         PlayerStatus pSta = attack.Status as PlayerStatus;
                         pSta.AddExp(_GiveExp);
                     }
                     else
                     {
+                        ParticleManager.Emit((int)ParticleManager.Kind.EnemyDamaged, transform, transform.localScale);
                         Vector3 pow = (transform.position - other.transform.position) * 5f;
                         _Rb.AddForce(pow, ForceMode.Impulse);
                     }
+
+                    SEManager.Emit((int)SEManager.Kind.EnemyDamaged, transform);
                 }
             }
         }
@@ -58,6 +62,8 @@ namespace Survival
                     _Life -= attack.PowerOnStay;
                     if (_Life < 0)
                     {
+                        ParticleManager.Emit((int)ParticleManager.Kind.EnemyDefeated, transform, transform.localScale);
+                        SEManager.Emit((int)SEManager.Kind.EnemyDamaged, transform);
                         gameObject.SetActive(false);
                         WaveEnemyManager.DefeatedEnemyCount++;
                         PlayerStatus pSta = attack.Status as PlayerStatus;
@@ -65,6 +71,7 @@ namespace Survival
                     }
                     else
                     {
+                        ParticleManager.Emit((int)ParticleManager.Kind.EnemyDamaged, transform, transform.localScale);
                         Vector3 pow = transform.position - other.transform.position;
                        _Rb.AddForce(pow);
                     }

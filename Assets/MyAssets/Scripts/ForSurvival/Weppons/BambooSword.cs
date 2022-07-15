@@ -67,10 +67,12 @@ namespace Survival
                     _SwingDeltaAngle = _Angler.NowLevelValue * 5f;
                     _SwingAngle = _Angler.NowLevelValue / 2f;
                     attackInfo.gameObject.transform.localEulerAngles = Vector3.up * _SwingAngle;
-                    attackInfo.DataSet(_PlayerStatus, 0f, _Power.NowLevelValue);
+                    attackInfo.DataSet(_PlayerStatus, 0f, _Power.NowLevelValue, 0, Vector3.zero, byte.MaxValue, float.MaxValue);
                     attackInfo.transform.localScale = Vector3.one * _Range.NowLevelValue;
                     attackInfo.gameObject.SetActive(true);
                 }
+
+                SEManager.Emit((int)SEManager.Kind.PlayerWeapon1, transform);
             }
             else if (attackInfo.gameObject.activeSelf)
             {
