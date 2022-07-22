@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MineDetector
@@ -20,9 +17,9 @@ namespace MineDetector
         /// <summary>爆弾を置かないマスの最小数</summary>
         const int _MIN_NUMBER_OF_SAFE_CELL = 2;
 
-        [SerializeField,Range(_MIN_NUMBER_OF_MINE, 10000) , Tooltip("爆弾の数")]
+        [SerializeField, Range(_MIN_NUMBER_OF_MINE, 10000), Tooltip("爆弾の数")]
         int _NumberOfMine = 10;
-                
+
         [SerializeField, Tooltip("ゲーム盤の横縦数(Length Limit を超える場合は Length Limit に丸められる)")]
         Vector2Int _MapSize = new Vector2Int(10, 10);
 
@@ -41,6 +38,16 @@ namespace MineDetector
         /// <summary>周囲マスを開けるメソッドを保管</summary>
         public static System.Action<int, int> CheckAround;
 
+        /// <summary>ゲームをクリアしている状態か確認するメソッドを保管</summary>
+        public static System.Func<bool> CheckCleared;
+
+        /// <summary>ゲームに負けて、どこに爆弾があったか開いて見せるメソッドを保管</summary>
+        public static System.Action CheckTheAnswer;
+
+
+        /// <summary>爆弾の総数</summary>
+        public int NumberOfMine { get => _NumberOfMine; }
+
 
         // Start is called before the first frame update
         void Start()
@@ -50,8 +57,14 @@ namespace MineDetector
             //ゲーム開始メソッドを登録
             GameStart = BoardInitialize;
 
-            //周囲マスをチェックして開けるオブジェクトを登録
+            //周囲マスをチェックして開けるメソッドを登録
             CheckAround = OpenAround;
+
+            //ゲームをクリアしている状態か確認するメソッドを登録
+            CheckCleared = CheckMapCleared;
+
+            //全ての爆弾マスを開けるメソッドを登録
+            CheckTheAnswer = OpenAllMineCell;
         }
 
         /// <summary>ゲーム盤を並べる</summary>
@@ -119,7 +132,7 @@ namespace MineDetector
             }
 
             //全ての空白セルについて、周囲の地雷セルの数を数え、あれば中身の数値を変更
-            foreach(CellController cell in _Map)
+            foreach (CellController cell in _Map)
             {
                 //地雷セルなら無視
                 if (cell.Contant == CellController.MINE_CONTENT)
@@ -127,7 +140,7 @@ namespace MineDetector
                     cell.SetContent(CellController.MINE_CONTENT);
                     continue;
                 }
-                
+
                 byte countOfMine = 0;
                 bool isMinRow = cell.Index.y < 1;
                 bool isMaxRow = cell.Index.y > _Map.GetLength(0) - 2;
@@ -136,12 +149,12 @@ namespace MineDetector
 
                 //左上→真上 … 真下→右下の順で中身を見る
                 if (!isMinRow && !isMinCol && _Map[cell.Index.y - 1, cell.Index.x - 1].Contant == CellController.MINE_CONTENT) countOfMine++;
-                if (!isMinRow &&              _Map[cell.Index.y - 1, cell.Index.x    ].Contant == CellController.MINE_CONTENT) countOfMine++;
+                if (!isMinRow && _Map[cell.Index.y - 1, cell.Index.x].Contant == CellController.MINE_CONTENT) countOfMine++;
                 if (!isMinRow && !isMaxCol && _Map[cell.Index.y - 1, cell.Index.x + 1].Contant == CellController.MINE_CONTENT) countOfMine++;
-                if (             !isMinCol && _Map[cell.Index.y,     cell.Index.x - 1].Contant == CellController.MINE_CONTENT) countOfMine++;
-                if (             !isMaxCol && _Map[cell.Index.y,     cell.Index.x + 1].Contant == CellController.MINE_CONTENT) countOfMine++;
+                if (!isMinCol && _Map[cell.Index.y, cell.Index.x - 1].Contant == CellController.MINE_CONTENT) countOfMine++;
+                if (!isMaxCol && _Map[cell.Index.y, cell.Index.x + 1].Contant == CellController.MINE_CONTENT) countOfMine++;
                 if (!isMaxRow && !isMinCol && _Map[cell.Index.y + 1, cell.Index.x - 1].Contant == CellController.MINE_CONTENT) countOfMine++;
-                if (!isMaxRow &&              _Map[cell.Index.y + 1, cell.Index.x    ].Contant == CellController.MINE_CONTENT) countOfMine++;
+                if (!isMaxRow && _Map[cell.Index.y + 1, cell.Index.x].Contant == CellController.MINE_CONTENT) countOfMine++;
                 if (!isMaxRow && !isMaxCol && _Map[cell.Index.y + 1, cell.Index.x + 1].Contant == CellController.MINE_CONTENT) countOfMine++;
 
                 //当該セルに反映
@@ -150,7 +163,6 @@ namespace MineDetector
 
             //ゲーム開始メソッドから登録解除
             GameStart = null;
-            GameManager.GameStartCall();
         }
 
         /// <summary>fromから周辺のマスを開き、空白ならその周囲のマスも開く</summary>
@@ -199,6 +211,33 @@ namespace MineDetector
             }
         }
 
+        /// <summary>ゲーム盤をクリアしているか確認するメソッド</summary>
+        /// <returns>true : クリアした</returns>
+        bool CheckMapCleared()
+        {
+            int count = 0;
+            foreach (CellController cell in _Map)
+            {
+                if (!cell.IsOpenned())
+                {
+                    count++;
+                }
+            }
 
+            //爆弾の個数と開いていないマスの個数が一致していればクリアしたとみなす
+            return count == _NumberOfMine;
+        }
+
+        /// <summary>全ての爆弾マスを開示するメソッド</summary>
+        void OpenAllMineCell()
+        {
+            foreach (CellController cell in _Map)
+            {
+                if (cell.Contant == CellController.MINE_CONTENT)
+                {
+                    cell.OpenMyself();
+                }
+            }
+        }
     }
 }

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace MineDetector
 {
@@ -29,12 +27,16 @@ namespace MineDetector
         /// <summary>自分で蓋を開けさせるようにするメソッド</summary>
         public System.Action OpenMyself = null;
 
+        /// <summary>蓋が外されているかを確認するメソッド</summary>
+        public System.Func<bool> IsOpenned = null;
+
 
         /// <summary>マス目中身（9は地雷 0とその他は空）</summary>
         public byte Contant { get => _Content; }
 
         /// <summary>このセルの座標</summary>
         public Vector2Int Index { get => _Index; }
+
 
 
         // Start is called before the first frame update
@@ -69,13 +71,13 @@ namespace MineDetector
         /// <summary>セルの中身を数値から決定</summary>
         void ConvertAppearContent()
         {
-            if(EMPTY_CONTENT < _Content && _Content < MINE_CONTENT)
+            if (EMPTY_CONTENT < _Content && _Content < MINE_CONTENT)
             {
                 _MineImage.gameObject.SetActive(false);
                 _ContentText.gameObject.SetActive(true);
                 _ContentText.text = _Content.ToString();
             }
-            else if(_Content == MINE_CONTENT)
+            else if (_Content == MINE_CONTENT)
             {
                 _ContentText.gameObject.SetActive(false);
                 _MineImage.gameObject.SetActive(true);
@@ -85,7 +87,6 @@ namespace MineDetector
                 _MineImage.gameObject.SetActive(false);
                 _ContentText.gameObject.SetActive(false);
             }
-
         }
     }
 }

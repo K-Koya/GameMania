@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MineDetector
@@ -21,18 +19,25 @@ namespace MineDetector
         [SerializeField, Tooltip("入力名 : マウス右クリック")]
         string _InputNameMouseRight = "Fire3";
 
+        /// <summary>旗の本数</summary>
+        int _NumberOfFlag = 0;
+
+        /// <summary>旗の本数</summary>
+        public int NumberOfFlag { get => _NumberOfFlag; }
+
 
         // Start is called before the first frame update
         void Start()
         {
             _Camera = Camera.main;
+            _NumberOfFlag = 0;
         }
 
         // Update is called once per frame
         void Update()
         {
             MouseClickManagement();
-        } 
+        }
 
 
         /// <summary>マウスクリック操作</summary>
@@ -49,7 +54,16 @@ namespace MineDetector
                 if (Input.GetButtonDown(_InputNameMouseRight))
                 {
                     //旗の反転処理
-                    cover.SwitchFlag();
+                    if (cover.SwitchFlag())
+                    {
+                        //旗の本数を追加
+                        _NumberOfFlag++;
+                    }
+                    else
+                    {
+                        //旗の本数を減らす
+                        _NumberOfFlag--;
+                    }
                 }
                 //左クリック
                 else if (Input.GetButtonDown(_InputNameMouseLeft))

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,26 +9,36 @@ namespace MineDetector
         static GameState _State = GameState.Standby;
 
         /// <summary>ゲーム盤</summary>
-        MineDetectorCellMap _CellMap = default;
+        MineDetectorCellMap _CellMap = null;
+
+        /// <summary>マウスがクリックされたことを確認するヤツ</summary>
+        MouseClickUtility _MouseClickUtility = null;
 
         /// <summary>経過時間</summary>
-        static double _Timer = 0f;
+        double _Timer = 0f;
+
+
 
 
         /// <summary>ゲームの進行状態</summary>
-        public static GameState State { get => _State; }
-
+        public GameState State { get => _State; }
         /// <summary>経過時間</summary>
-        public static double Timer { get => _Timer; }
+        public double Timer { get => _Timer; }
+        /// <summary>爆弾の総数</summary>
+        public int NumberOfMine { get => _CellMap.NumberOfMine; }
+        /// <summary>立てた旗の本数</summary>
+        public int NumberOfFlag { get => _MouseClickUtility.NumberOfFlag; }
 
 
 
         // Start is called before the first frame update
         void Start()
         {
-            _CellMap = GetComponent<MineDetectorCellMap>();
+            _CellMap = FindObjectOfType<MineDetectorCellMap>();
+            _MouseClickUtility = FindObjectOfType<MouseClickUtility>();
             _State = GameState.Standby;
             _Timer = 0f;
+
         }
 
         // Update is called once per frame
@@ -56,6 +64,12 @@ namespace MineDetector
         public static void GameStartCall()
         {
             _State = GameState.Playing;
+        }
+
+        /// <summary>ゲームに勝ったことにしろっていう要求</summary>
+        public static void GameClearCall()
+        {
+            _State = GameState.Clear;
         }
 
         /// <summary>ゲームに負けたことにしろっていう要求</summary>

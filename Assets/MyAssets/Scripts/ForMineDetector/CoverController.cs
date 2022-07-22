@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MineDetector
@@ -56,6 +54,7 @@ namespace MineDetector
 
             _Cell = GetComponentInParent<CellController>();
             _Cell.OpenMyself = Open;
+            _Cell.IsOpenned = () => IsOpenned;
         }
 
         // Update is called once per frame
@@ -71,7 +70,7 @@ namespace MineDetector
                 {
                     _Renderer.material = _OriginalOveredMouse;
                 }
-                
+
                 _IsOveredMouse = false;
             }
             else
@@ -96,8 +95,12 @@ namespace MineDetector
         /// <summary>蓋を外す</summary>
         public void Open()
         {
-            //ゲーム開始メソッドを未実行なら実行する
-            MineDetectorCellMap.GameStart?.Invoke(Index.x, Index.y);
+            //ゲーム開始メソッドを未実行なら実行し、ゲーム開始
+            if (MineDetectorCellMap.GameStart != null)
+            {
+                MineDetectorCellMap.GameStart(Index.x, Index.y);
+                GameManager.GameStartCall();
+            }
 
             //既にこのマスが開いていれば離脱
             if (_IsOpenned) return;
@@ -109,25 +112,33 @@ namespace MineDetector
             gameObject.SetActive(!_IsOpenned);
 
             //マスの中身によって処理を変える
-            switch(_Cell.Contant)
+            switch (_Cell.Contant)
             {
                 //このマスが空白なら周囲のマスを開ける
                 case CellController.EMPTY_CONTENT:
                     MineDetectorCellMap.CheckAround(Index.y, Index.x);
                     break;
 
-                //このマスが爆弾なら敗北しゲーム終了
+                //このマスが爆弾なら敗北し爆弾マスをすべて開いた上でゲーム終了
                 case CellController.MINE_CONTENT:
                     GameManager.GameFaultCall();
-
+                    MineDetectorCellMap.CheckTheAnswer();
                     break;
+            }
+
+            //ゲームをクリアしていたら、それを報告する
+            if (MineDetectorCellMap.CheckCleared())
+            {
+                GameManager.GameClearCall();
             }
         }
 
         /// <summary>旗を建てているときは降ろし、旗を降ろしているときは建てる</summary>
-        public void SwitchFlag()
+        /// <returns>変更後の旗の状況</returns>
+        public bool SwitchFlag()
         {
             _IsBuiltFlag = !_IsBuiltFlag;
+            return _IsBuiltFlag;
         }
     }
 }
