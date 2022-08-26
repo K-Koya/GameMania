@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 /// <summary>拡張メソッド導入用クラス</summary>
 static public partial class Extensions
 {
@@ -47,46 +42,63 @@ static public partial class Extensions
         T t = default;
         bool isExist = true;
 
-        try
+        switch (kind)
         {
-            switch (kind)
-            {
-                case KindOfNeighbor.Next:
-                    t = array[index0, index1 + 1];
-                    break;
-                case KindOfNeighbor.Previous:
-                    t = array[index0, index1 - 1];
-                    break;
-                case KindOfNeighbor.LeftUp:
+            case KindOfNeighbor.Next:
+                t = array[index0, index1 + 1];
+                break;
+            case KindOfNeighbor.Previous:
+                t = array[index0, index1 - 1];
+                break;
+            case KindOfNeighbor.LeftUp:
+                if (0 < index0 && 0 < index1)
+                {
                     t = array[index0 - 1, index1 - 1];
-                    break;
-                case KindOfNeighbor.Up:
+                }
+                break;
+            case KindOfNeighbor.Up:
+                if (0 < index0)
+                {
                     t = array[index0 - 1, index1];
-                    break;
-                case KindOfNeighbor.RightUp:
+                }
+                break;
+            case KindOfNeighbor.RightUp:
+                if (0 < index0 && array.GetLength(1) - 1 > index1)
+                {
                     t = array[index0 - 1, index1 + 1];
-                    break;
-                case KindOfNeighbor.Left:
+                }
+                break;
+            case KindOfNeighbor.Left:
+                if (0 < index1)
+                {
                     t = array[index0, index1 - 1];
-                    break;
-                case KindOfNeighbor.Right:
+                }
+                break;
+            case KindOfNeighbor.Right:
+                if (array.GetLength(1) - 1 > index1)
+                {
                     t = array[index0, index1 + 1];
-                    break;
-                case KindOfNeighbor.LeftDown:
+                }
+                break;
+            case KindOfNeighbor.LeftDown:
+                if (array.GetLength(0) - 1 > index0 && 0 < index1)
+                {
                     t = array[index0 + 1, index1 - 1];
-                    break;
-                case KindOfNeighbor.Down:
+                }
+                break;
+            case KindOfNeighbor.Down:
+                if (array.GetLength(0) - 1 > index0)
+                {
                     t = array[index0 + 1, index1];
-                    break;
-                case KindOfNeighbor.RightDown:
+                }
+                break;
+            case KindOfNeighbor.RightDown:
+                if (array.GetLength(0) - 1 > index0 && array.GetLength(1) - 1 > index1)
+                {
                     t = array[index0 + 1, index1 + 1];
-                    break;
-                default: break;
-            }
-        }
-        catch (ArgumentOutOfRangeException)
-        {
-            isExist = false;
+                }
+                break;
+            default: break;
         }
 
         return (t, isExist);
