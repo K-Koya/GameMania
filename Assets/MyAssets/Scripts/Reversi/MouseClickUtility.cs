@@ -62,7 +62,7 @@ namespace Reversi
                             GameManager.Instance.SwitchTurn();
                             if (isPass)
                             {
-                                if (ReversiCellMap.Instance.DetectTurnOverCell(GameManager.Instance.Turn))
+                                if (!ReversiCellMap.Instance.DetectTurnOverCell(GameManager.Instance.Turn))
                                 {
                                     GameManager.Instance.Phase = GamePhase.Ending;
                                 }

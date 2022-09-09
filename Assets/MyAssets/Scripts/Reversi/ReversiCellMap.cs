@@ -234,6 +234,7 @@ namespace Reversi
                     FloorController floor = cell.GetComponent<FloorController>();
                     _Map[x, y] = floor;
                     floor.FloorIndex = new Vector2Int(x, y);
+
                 }
             }
         }
@@ -246,6 +247,7 @@ namespace Reversi
             foreach(FloorController fc in _Map)
             {
                 fc.ResetCell();
+                fc.ActiveCountText(-1, Color.black);
             }
 
             _Map[centerPos.x, centerPos.y - 1].DropStone(StoneColor.White, true);
@@ -267,9 +269,11 @@ namespace Reversi
                 {
                     case StoneColor.White:
                         white++;
+                        fc.ActiveCountText(white, Color.black);
                         break;
                     case StoneColor.Black:
                         black++;
+                        fc.ActiveCountText(black, Color.white);
                         break;
                     default: break;
                 }

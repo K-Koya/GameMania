@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 namespace Reversi
 {
@@ -26,6 +27,9 @@ namespace Reversi
 
         [SerializeField, Tooltip("マウスカーソルを合わせたときに使う床のマテリアル")]
         Material _OriginalOveredMouse = default;
+
+        [SerializeField, Tooltip("個数計測用GUI")]
+        TextMeshProUGUI _ResultCountText = null;
 
         [SerializeField, Tooltip("True : マウスカーソルが合っている")]
         bool _IsOveredMouse = false;
@@ -64,6 +68,10 @@ namespace Reversi
             _StoneController.transform.localPosition = transform.up;
 
             _StoneColor = StoneColor.None;
+
+            _ResultCountText?.gameObject.SetActive(false);
+
+            GetComponentInChildren<Canvas>().worldCamera = Camera.main;
         }
 
         // Update is called once per frame
@@ -141,6 +149,20 @@ namespace Reversi
         {
             _StoneColor = StoneColor.None;
             _StoneController.gameObject.SetActive(false);
+        }
+
+        /// <summary>石の個数を表示するGUIの表示・非表示設定</summary>
+        /// <param name="number">石のカウント(0以下なら非表示)</param>
+        public void ActiveCountText(int number, Color color)
+        {
+            bool isActive = number > 0;
+
+            if (isActive && _ResultCountText)
+            {
+                _ResultCountText.color = color;
+                _ResultCountText.text = number.ToString();
+            }
+            _ResultCountText?.gameObject.SetActive(isActive);
         }
     }
 }

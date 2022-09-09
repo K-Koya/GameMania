@@ -50,6 +50,7 @@ namespace Reversi
                     _Phase = GamePhase.Playing;
                     break;
                 case GamePhase.Playing:
+                case GamePhase.Ending:
                     _ResultText?.gameObject.SetActive(false);
                     _TurnText?.gameObject.SetActive(true);
                     DropFirstStone();
@@ -104,19 +105,19 @@ namespace Reversi
                     break;
                 case GamePhase.Ending:
 
-                    if (_ResultText && _ResultText.gameObject.activeSelf)
+                    if (_ResultText)
                     {
                         _ResultText.gameObject.SetActive(true);
                         var counter = ReversiCellMap.Instance.CountStones();
 
                         if (counter.Item1 > counter.Item2)
                         {
-                            _ResultText.color = Color.white;
+                            _ResultText.color = Color.black;
                             _ResultText.text = "White Win!!";
                         }
                         else if (counter.Item1 < counter.Item2)
                         {
-                            _ResultText.color = Color.black;
+                            _ResultText.color = Color.white;
                             _ResultText.text = "Black Win!!";
                         }
                         else
