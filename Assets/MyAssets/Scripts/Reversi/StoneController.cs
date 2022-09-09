@@ -34,16 +34,16 @@ namespace Reversi
         /// <summary>Î‚ğu‚É‚Ğ‚Á‚­‚è•Ô‚·</summary>
         public void Inverse()
         {
-            _StoneUpVector = -transform.up;
-            transform.up = _StoneUpVector;
+            //_StoneUpVector = -transform.up;
+            //transform.up = _StoneUpVector;
         }
 
         /// <summary>Î‚ğ‰ñ“]‚³‚¹‚Ä‚Ğ‚Á‚­‚è•Ô‚·</summary>
-        public void RollOver()
+        public void TurnOver()
         {
             //¡‚Ìã•ûŒü‚ğİ’è‚µ’¼‚µ”½“]
-            transform.up = _StoneUpVector;
-            _StoneUpVector = -transform.up;
+            //transform.up = _StoneUpVector;
+            //_StoneUpVector = -transform.up;
 
             //—Í‚Ì‚©‚¯‚éˆÊ’u‚ğİ’è
             Vector3 forcePos = transform.forward;

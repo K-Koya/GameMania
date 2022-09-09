@@ -15,8 +15,14 @@ namespace Reversi
         /// <summary>元の床のマテリアル</summary>
         Material _Original = default;
 
+        /// <summary>true : 石を落とせる</summary>
+        bool _IsAbleToDrop = false;
+
         [SerializeField, Tooltip("セルの場所")]
         Vector2Int _FloorIndex = Vector2Int.zero;
+
+        [SerializeField, Tooltip("石をおける床のマテリアル")]
+        Material _AbleToDropStone = default;
 
         [SerializeField, Tooltip("マウスカーソルを合わせたときに使う床のマテリアル")]
         Material _OriginalOveredMouse = default;
@@ -34,6 +40,12 @@ namespace Reversi
         #region プロパティ
         /// <summary>この床がどの位置にあるかの情報</summary>
         public Vector2Int FloorIndex { get => _FloorIndex; set => _FloorIndex = value; }
+        /// <summary>乗っている石の色</summary>
+        public StoneColor StoneColor { get => _StoneColor; }
+        /// <summary>石のデータ</summary>
+        public StoneController StoneController { get => _StoneController; }
+        /// <summary>true : 石を落とせる</summary>
+        public bool IsAbleToDrop { get => _IsAbleToDrop; set => _IsAbleToDrop = value; }
         #endregion
 
 
@@ -64,14 +76,21 @@ namespace Reversi
             }
             else
             {
-                _Renderer.material = _Original;
+                if (_IsAbleToDrop)
+                {
+                    _Renderer.material = _AbleToDropStone;
+                }
+                else
+                {
+                    _Renderer.material = _Original;
+                }
             }
         }
 
         /// <summary>カーソルを合わせている</summary>
         public void OveredMouseCursor()
         {
-            if (_StoneColor == StoneColor.None)
+            if (_StoneColor == StoneColor.None && _IsAbleToDrop)
             {
                 _IsOveredMouse = true;
             }
@@ -79,28 +98,49 @@ namespace Reversi
 
         /// <summary>石を投下する</summary>
         /// <param name="stoneColor">色</param>
-        public void DropStone(StoneColor stoneColor)
+        /// <returns>true : パスが発生</returns>
+        public bool DropStone(StoneColor stoneColor, bool useAnim)
         {
             //既に石が乗っていたなら離脱
-            if (_StoneColor != StoneColor.None) return;
+            if (_StoneColor != StoneColor.None) return false;
 
             //無色を渡して来たら離脱
-            if (stoneColor == StoneColor.None) return;
+            if (stoneColor == StoneColor.None) return false;
 
             //石を見えるようにして投下する
-            _StoneController.transform.position = transform.position + transform.up * 9f;
+            if(useAnim) _StoneController.transform.position = transform.position + transform.up * 3f;
+            else _StoneController.transform.position = transform.position + transform.up * 0.5f;
             _StoneController.transform.up = Vector3.up * (int)stoneColor;
             _StoneController.gameObject.SetActive(true);
 
             //色を更新
             _StoneColor = stoneColor;
+            //他の石を裏返す
+            ReversiCellMap.Instance.TurnOverStones(stoneColor, _FloorIndex.x, _FloorIndex.y);
+            //盤面を更新
+            if (ReversiCellMap.Instance.DetectTurnOverCell(stoneColor))
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        /// <summary>石を落下させることなく即盤面上に置く</summary>
+        /// <summary>石を指定した色にする</summary>
         /// <param name="stoneColor">色</param>
-        public void SetStone(StoneColor stoneColor)
+        public void TurnOverStone(StoneColor stoneColor)
         {
+            if (_StoneColor == stoneColor) return;
 
+            _StoneColor = stoneColor;
+            _StoneController.TurnOver();
+        }
+
+        /// <summary>マスに何も置かれていない状態に戻す</summary>
+        public void ResetCell()
+        {
+            _StoneColor = StoneColor.None;
+            _StoneController.gameObject.SetActive(false);
         }
     }
 }

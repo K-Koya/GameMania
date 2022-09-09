@@ -39,7 +39,7 @@ namespace Reversi
         /// <summary>マウスクリック操作</summary>
         void OnMouseManagement()
         {
-            if (GameManager.Phase == GamePhase.Playing)
+            if (GameManager.Instance.Phase == GamePhase.Playing)
             {
                 var hitInfo = IsClickedAnyCell();
                 if (hitInfo.Item1)
@@ -56,7 +56,18 @@ namespace Reversi
                     //左クリック
                     else if (Input.GetButtonDown(_InputNameMouseLeft))
                     {
-                        floor.DropStone(StoneColor.White);
+                        if (floor.IsAbleToDrop)
+                        {
+                            bool isPass = floor.DropStone(GameManager.Instance.Turn, true);
+                            GameManager.Instance.SwitchTurn();
+                            if (isPass)
+                            {
+                                if (ReversiCellMap.Instance.DetectTurnOverCell(GameManager.Instance.Turn))
+                                {
+                                    GameManager.Instance.Phase = GamePhase.Ending;
+                                }
+                            }
+                        }
                     }
                 }
             }
